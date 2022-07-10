@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-cloak</title>
+    <style>
+        [v-cloak]{
+            /*display: none;*/
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p style="color: brown">v-cloak在实例解析之前存在，解析后消失</p>
+        <h1 v-cloak style="color: blueviolet">{{msg}}</h1>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        setTimeout(()=>{
+            const app = Vue.createApp({
+                data(){
+                    return{
+                        msg:'基础模板'
+                    }
+                }
+            }).mount("#app");
+        },1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>no-props</title>
+</head>
+<body>
+<div id="app">
+    <h3>no-props一般用于传样式，能把需要的东西传到子组件的第一层div上</h3>
+    <nx-box v-bind:info="msg" style="width: 200px;height: 200px;background-color: pink"></nx-box>
+    <h3>不接收的话用，在组件里写inheritAttrs:false,</h3>
+    <p>-------------------------------------</p>
+    <h3>如果第一层有多个div,则不会生效，需要生效需要加 v-bind="$attrs  v-bind="$attrs.style""</h3>
+</div>
+<template id="box">
+    <div v-bind:sl="$attrs.info">我是子组件</div>
+    <div v-bind="$attrs">我是子组件</div>
+    <div v-bind:style="$attrs.style">我是子组件</div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+    const app = Vue.createApp({
+        data(){
+            return{
+                msg:'测试'
+            }
+        }
+    });
+    app.component('nx-box',{
+        /*不接收的话用，在组件里写inheritAttrs:false*/
+        /*inheritAttrs:false,*/
+        template:'#box'
+    })
+    app.mount("#app");
+</script>
+</body>
+</html>

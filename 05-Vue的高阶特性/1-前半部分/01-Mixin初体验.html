@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin初体验</title>
+    <link href="../css/my.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div id="app1">
+
+    </div>
+
+    <div id="app2">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const MyMixin = {
+            data(){
+                return{
+                    msg:'mixin一般用在把实例中相同的部分抽取出来，放在mixin中'
+                }
+            },
+            methods:{
+                hello(){
+                    alert('Hello')
+                }
+            }
+        }
+        const app1 = Vue.createApp({
+            mixins:[MyMixin],
+            template:`
+                <h1>{{msg}}</h1>
+                <button v-on:click="hello" class="box2">点我</button>
+            `
+        });
+        app1.mount("#app1");
+        const app2 = Vue.createApp({
+            mixins:[MyMixin],
+            template: `
+              <h1>{{msg}}</h1>
+              <button v-on:click="hello" class="box2">点我</button>
+            `
+        })
+        app2.mount("#app2");
+    </script>
+</body>
+</html>

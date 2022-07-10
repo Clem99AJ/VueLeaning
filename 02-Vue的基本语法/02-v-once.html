@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-once</title>
+</head>
+<body>
+    <div id="app">
+        <p>v-once能让标签只改变一次</p>
+        <h2>会变化:{{msg}}</h2>
+        <h2 v-once>不会变化:{{msg}}</h2>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'看看会不会变化'
+                }
+            }
+        }).mount("#app");
+
+    </script>
+</body>
+</html>

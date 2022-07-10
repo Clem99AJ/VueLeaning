@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*自定义局部指令*/
+
+        const nxDirective = {
+            focus:{
+                /*自定义指令中可以使用的钩子函数（生命周期函数）*/
+                created(){
+                    console.log('created')
+                },
+                beforeMount(){
+                    console.log('beforeMount')
+                },
+                mounted(el){
+                    console.log('mounted')
+                    el.focus()
+                },
+                beforeUpdate(){
+                    console.log('beforeUpdate')
+                },
+                updated(){
+                    console.log('updated')
+                },
+                beforeUnmount(){
+                    console.log('beforeUnmount')
+                },
+                unmounted(){
+                    console.log('unmounted')
+                }
+            }
+        }
+
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    isShow:true
+                }
+            },
+            /*注册自定义指令*/
+            directives:nxDirective,
+            template:`
+                <div>
+                    <input type="text" placeholder="enter some information" v-focus v-show="isShow">
+                </div>
+                <button v-on:click="isShow = !isShow">click</button>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

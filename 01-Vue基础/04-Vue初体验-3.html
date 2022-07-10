@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue初体验</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{msg}}</h2>
+        <h2>{{msg1}}</h2>
+        <p>--------指令----------</p>
+        <!--这里添加一个按钮-->
+        <button v-on:click="msg='学院'">品牌</button>
+        <button v-on:click="msg='http://www.ithema.com'">网址</button>
+        <p>--------改进版(v-on等效于@)---------</p>
+        <button @click="brand">品牌</button>
+        <button @click="site">网址</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return {
+                    msg:'',
+                    msg1:''
+                }
+            },
+            methods:{
+                brand(){
+                    this.msg1 = 'school';//取出data中的值直接使用
+                    alert('品牌');//浏览器做出响应
+                },
+                site(){
+                    this.msg1 = 'http://www.ithema.com';//取出data中的值直接使用
+                    alert('网址');//浏览器做出响应
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

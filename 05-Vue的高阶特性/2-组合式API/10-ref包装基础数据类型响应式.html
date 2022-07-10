@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ref</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            /*
+                ref能让setup中的基础类型数据，具有响应式
+                写法
+                    const {ref} = Vue;
+                    let msg = ref('This is test')
+            */
+            setup(props,contest){
+                const {ref} = Vue;
+                /*
+                    原理
+                    通过proxy,'This is a test' --> proxy({value:'This is a test'})
+                */
+                let msg = ref('This is a test');
+
+                /*
+                    如果需要修改msg的值
+                    因为msg现在是一个对象，所以其实是修改对象中的value属性
+                */
+                setTimeout(()=>{
+                    msg.value = "I'm changed"
+                },3000);
+                return{
+                    msg
+                }
+            },
+            template:`
+                <div>
+                    <h3>{{msg}}</h3>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

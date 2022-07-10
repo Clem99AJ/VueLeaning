@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for数组</title>
+</head>
+<body>
+    <div id="app">
+        <h1>1、遍历数组</h1>
+        <ul>
+            <li v-for="p in personArr">{{p}}</li>
+        </ul>
+        <h1>2、遍历数组对象</h1>
+        <ul>
+            <li v-for="(p,index) in persons">{{index}}---{{p.name}} + {{p.age}} + {{p.address}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    personArr:['萧炎',20,'丹塔'],
+                    persons:[
+                        {name:'萧炎',age:20,address:'丹塔'},
+                        {name:'小医仙',age:20,address:'丹塔'},
+                        {name:'萧熏儿',age:20,address:'丹塔'},
+                        {name:'紫妍',age:20,address:'丹塔'}
+                    ]
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

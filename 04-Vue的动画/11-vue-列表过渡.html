@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表过渡</title>
+    <style>
+        body,html{
+            /*居中*/
+            text-align: center;
+            /*不是内联样式需要使用这个*/
+            margin: 0 auto;
+        }
+        .list-item{
+            display:inline-block;
+            margin: 20px;
+        }
+        .button-box{
+            /*停留出现手势*/
+            cursor: pointer;
+            opacity: 0.8;
+            border: 1px solid plum;
+            margin-right: 25px;
+        }
+        .button-box:hover{
+            background-color: pink;
+            opacity: 0.65;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        .v-enter-from{
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        .v-enter-active{
+            transition: all 1s ease-in;
+        }
+        .v-enter-to{
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .v-leave-from{
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .v-leave-active{
+            transition: all 1s ease-in;
+        }
+        .v-leave-to{
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--vue列表动画用标签transition-group嵌套-->
+        <transition-group>
+            <div class="list-item" v-for="item in list" v-bind:key="item">
+                {{item}}
+            </div>
+        </transition-group>
+
+        <div>
+            <button v-on:click="add" class="button-box">add</button>
+            <button v-on:click="del" class="button-box">del</button>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    list:['萧炎','小医仙','萧熏儿','云韵']
+                }
+            },
+            methods:{
+                add(){
+                    this.list.push('路人' + (this.list.length + 1))
+                },
+                del(){
+                    this.list.pop();
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

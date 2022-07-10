@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-on常用修饰符</title>
+    <style>
+        .box1{
+            background-color:red;
+            width: 100px;
+            height: 100px;
+        }
+        .box2{
+            background-color: aqua;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <p>1、阻止冒泡.stop</p>
+        <div class="box1" v-on:click="boxClick()">
+            <button v-on:click="btn1Click($event)">点我(老方法)</button>
+        </div>
+        <div class="box2" v-on:click="boxClick()">
+            <button v-on:click.stop="btn2Click()">点我(新方法)</button>
+        </div>
+        <p>2、阻止默认事件.prevent(一般用在表单和a标签)</p>
+        <form action="https://www.jd.com">
+            <input type="submit" value="提交(老方法)" v-on:click="doSubmit1($event)">
+        </form>
+        <form action="https://www.jd.com">
+            <input type="submit" value="提交(老方法)" v-on:click.prevent="doSubmit2">
+        </form>
+        <a href="https://www.baidu.com" v-on:click.prevent="aClick">百度一下</a>
+        <p>3、响应一次事件.once</p>
+        <button v-on:click.once="onceClick">只能点我一次</button>
+        <p>4、键盘事件修饰符</p>
+        <input type="text" placeholder="请输入内容" v-on:keyup="getMsg($event)">
+        <br>
+        <input type="text" placeholder="请输入内容(回车后响应)" v-on:keyup.enter="getMsg($event)">
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    Inter:0
+                }
+            },
+            methods:{
+                boxClick(){
+                    console.log('点击了盒子');
+                    this.msg = '点击了盒子';
+                },
+                btn1Click(event){
+                    event.stopPropagation();
+                    console.log('点击了按钮');
+                    this.msg = '点击了按钮';
+                },
+                btn2Click(){
+                    console.log('点击了按钮');
+                    this.msg = '点击了按钮';
+                },
+                doSubmit1(event){
+                    event.preventDefault();
+                    console.log('提交了表单');
+                    this.msg = '提交了表单';
+                },
+                doSubmit2(){
+                    console.log('提交了表单');
+                    this.msg = '提交了表单';
+                },
+                aClick(){
+                    console.log('点击了a标签');
+                    this.msg = '点击了a标签';
+                },
+                onceClick(){
+                    console.log("你点了我一次");
+                    this.msg = '你点了我一次';
+                },
+                getMsg(event){
+                    console.log(event);
+
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

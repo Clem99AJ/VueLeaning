@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态组件</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'动态组件如下（v-show的方法展示）',
+                    nxShow:'nx-btn'
+                }
+            },
+            methods:{
+                change(){
+                    this.nxShow = this.nxShow==='nx-btn'?'nx-input':'nx-btn';
+                },
+                btnFun(item){
+                    this.msg = item;
+                }
+            },
+            template:`
+                <div>
+                    <h3>这里换了个写法，把内容不放在上面了div里了，放在template里,作用是一样的</h3>
+
+                    <h3>{{msg}}</h3>
+                </div>
+
+                <div>
+                    <nx-btn v-show="nxShow==='nx-btn'" v-on:btn-click="btnFun"></nx-btn>
+
+                    <nx-input v-show="nxShow==='nx-input'"></nx-input>
+                    <p>-------------</p>
+                    <h3>Vue提供的动态组件的标签component
+                      会根据:is="nxShow"中的nxShow的值自己寻找组件,
+                      即省略了写方法的那步
+                    </h3>
+                    <h3>但是这样组件不会缓存，切换后内容消失得使用keep-alive标签，才能有缓存</h3>
+                    <keep-alive>
+                        <component v-bind:is="nxShow" v-on:btn-click="btnFun"></component>
+                    </keep-alive>
+
+                    <p>-------------</p>
+                    <button v-on:click="change">切换显示</button>
+                </div>
+
+            `
+        });
+        /*这里复习一下全局组件的写法：1、创建实例；2、注册组件；3、挂在实例*/
+        app.component('nxBtn',{
+            methods: {
+                btnClick(){
+                    /*这里复习了子传父的方法，实现了子组件修改父组件中的内容*/
+                    this.$emit('btnClick','你点击了子组件');
+                }
+            },
+            template: `
+                <button v-on:click="btnClick">点我跳转</button>
+            `
+        });
+        app.component('nxInput',{
+            template:`
+                <input type="text">
+            `
+        });
+
+        app.mount("#app");
+    </script>
+</body>
+</html>

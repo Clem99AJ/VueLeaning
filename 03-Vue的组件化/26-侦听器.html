@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侦听器</title>
+</head>
+<body>
+    <div id="app">
+        <h1>价格:{{price}}</h1>
+
+        <h2>会员:{{SuperPrice}}</h2>
+        <p>{{second}}秒后改变</p>
+        <h3>VIP:{{vipPrice}}</h3>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    price:5,
+                    vipPrice:'',
+                    second:3
+                }
+            },
+            computed:{
+                SuperPrice(){
+                    return this.price * 0.8;
+                }
+            },
+            // 用于侦听使用
+            watch:{
+                //这里写被监听的变量名()内current是现在的值，prev是之前的值
+                price(current,prev){
+                    console.log(current,prev);
+                    console.log('Price is changed');
+                    //与计算属性的用法区别最大的是，这里可以做异步操作
+
+                    //这里写了个实时的倒计时
+                    let clock = window.setInterval(()=>{
+                        this.second--;
+                        if(this.second < 0){
+                            this.second = 3;
+                            window.clearInterval(clock);
+                        }
+                    },1000);
+                    setTimeout(()=>{
+                        this.vipPrice = current * 0.5;
+                    },3000);
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

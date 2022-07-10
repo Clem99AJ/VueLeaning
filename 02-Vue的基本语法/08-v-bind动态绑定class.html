@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind动态绑定</title>
+    <style>
+        .red{
+            color: red;
+        }
+        .blue{
+            color: blue;
+        }
+        .purple{
+            color: purple;
+        }
+        .f60{
+            font-size: 60px;
+        }
+        .box{
+            height: 50px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 :class="c3">Simple Method</h1>
+        <p class="blue">原始的方法(在头里加样式，标签上class引用)</p>
+        <h2 class="red">{{msg}}</h2>
+        <p class="blue">动态绑定的方法</p>
+        <h2 :class="c1">{{msg}}</h2>
+        <h2 :class="c3">多种样式同时使用，使用对象的方式</h2>
+        <p>格式---:class="{[类名1]:布尔值,[类名2]:布尔值,[类名3]:布尔值}"</p>
+        <p :class="{[c1]:true,[F60]:true}">{{msg}}</p>
+        <p>加上按钮后，可以动态变换的</p>
+        <button @click="change">切换</button>
+        <p :class="{[c1]:isRed,[F60]:isF60}">{{msg}}</p>
+        <p class="box" :class="{[c1]:isRed,[F60]:isF60}">{{msg}}</p>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return {
+                    msg:'基本模板',
+                    c1:'red',
+                    c2:'blue',
+                    c3:'purple',
+                    F60:'f60',
+                    isRed:true,
+                    isF60:true
+                }
+            },
+            methods:{
+                change(){
+                    this.isRed = !this.isRed;
+                    this.isF60 = !this.isF60;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

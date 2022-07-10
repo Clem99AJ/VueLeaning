@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插槽的基本使用</title>
+</head>
+<body>
+<!--使用```<slot></slot>```标签来预留位置-->
+<div id="app">
+
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    const Box = {
+        data(){
+            return{
+                msg:'这里是子组件，里面有三条数据msg012,我使用了msg01,父组件使用了msg2',
+                msg1:'子组件的消息1',
+                msg2:'子组件的消息2'
+            }
+        },
+        methods:{
+            inClick(){
+                alert(this.msg1)
+            }
+        },
+        template:`
+          <div style="background-color: mediumpurple;height: 500px;width: 500px">
+              <h2>{{msg}}</h2>
+              <!--
+                  插槽用<slot>这里填默认信息，就是当没传入任何东西时显示的</slot>标签预留位置
+              -->
+              <slot>
+                ##预留插槽##
+              </slot><br>
+              <button v-on:click="inClick">点我</button>
+          </div>
+
+        `
+    }
+
+    const app = Vue.createApp({
+        data(){
+            return{
+                msg:'基础模板'
+            }
+        },
+        components:{
+            'b-box':Box
+        },
+        methods: {
+            outClick(){
+                //父组件访问子组件用this.$refs
+                alert(this.$refs.box1.msg2)
+            }
+        },
+        template: `
+          <!--这样没使用插槽，显示默认信息，ref是父组件访问子组件用-->
+          <b-box ref="box1" >
+
+          </b-box>
+          <button v-on:click="outClick">点我父组件</button>
+          <!--
+              这里使用了插槽
+              把<button v-on:click="outClick">点我父组件</button>
+              替换了原本<slot></slot>的位置
+          -->
+          <b-box ref="box1" >
+          <button v-on:click="outClick">点我父组件</button>
+          </b-box>
+          <!--
+              这里使用了插槽
+              把<input type="text" placeholder="Please enter information">
+              替换了原本<slot></slot>的位置
+          -->
+          <b-box>
+          <input type="text" placeholder="Please enter information">
+          </b-box>
+          <!--
+              这里使用了插槽
+              <image src="https://webstatic.mihoyo.com/upload/op-public/2021/10/09/def1f2abcfc2af0bbe2e5900a60a5ee1_5699547505742166353.png"
+                     alt="图像地址可能失效了">
+              </image>
+              替换了原本<slot></slot>的位置
+          -->
+          <b-box>
+          <image src="https://webstatic.mihoyo.com/upload/op-public/2021/10/09/def1f2abcfc2af0bbe2e5900a60a5ee1_5699547505742166353.png"
+                 alt="图像地址可能失效了">
+          </image>
+          </b-box>
+        `
+    }).mount("#app");
+</script>
+</body>
+</html>

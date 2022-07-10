@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性和methods的区别</title>
+</head>
+<body>
+    <div id="app">
+        <p>乔治·希尔</p>
+        <p>1、常规用法</p>
+        <p>{{firstName + '·' + lastName}}</p>
+        <p>2、函数用法</p>
+        <p>{{getName()}}</p>
+        <p>{{getName()}}</p>
+        <p>{{getName()}}</p>
+        <p>{{getName()}}</p>
+        <p>{{getName()}}</p>
+        <p>3、计算属性(若值没有发生改变，就会直接用缓存内容)</p>
+        <p>{{AllName}}</p>
+        <p>{{AllName}}</p>
+        <p>{{AllName}}</p>
+        <p>{{AllName}}</p>
+        <p>{{AllName}}</p>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    firstName:'乔治',
+                    lastName:'希尔'
+                }
+            },
+            //计算属性
+            computed:{
+                //细节:本质上还是属性，写法如函数，命名如属性
+                AllName(){
+                    console.log('---AllName()---');
+                    return this.firstName + '·' + this.lastName;
+                }
+            },
+            methods:{
+                getName(){
+                    console.log('---getName()---');
+                    return this.firstName + '·' + this.lastName;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>readonly只读</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*
+        * readonly让数据变得只读
+        * 即无法进行修改
+        * */
+        const app = Vue.createApp({
+            setup(props,context){
+                const {readonly} = Vue;
+                let pObj = readonly({name:'萧炎',sex:'male'});
+
+                setTimeout(()=>{
+                    pObj.name = '你是只读的，所以你看不到我'
+                },3000);
+
+                return{
+                    pObj
+                }
+            },
+            template:`
+                <div>
+                    <h1>{{pObj}}</h1>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

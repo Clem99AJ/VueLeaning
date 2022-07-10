@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind动态绑定style</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{msg0}}</p>
+        <p style="font-size: 50px">{{msg2}}</p>
+        <p>{{msg1}}</p>
+        <p :style="{fontSize:'50px',background:'red'}">{{msg2}}</p>
+        <p :style="{fontSize:'50px',background:bColor}">{{msg2}}</p>
+        <button @click="increaseSize()">变大</button>
+        <button @click="decreaseSize()">变小</button>
+
+        <p>{{FS}}</p>
+        <p :style="getStyle()">{{msg2}}</p>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg0:'原始用法',
+                    msg1:'动态传递',
+                    msg2:'基本模板',
+                    FS:'50px',
+                    bColor:'red',
+                    fs:50
+                }
+            },
+            methods:{
+                getStyle(){
+                    return {fontSize:this.FS,background:this.bColor};
+                },
+                decreaseSize(){
+                    this.fs = this.fs - 5;
+                    this.FS = this.fs + 'px';
+                },
+                increaseSize(){
+                    this.fs = this.fs + 5;
+                    this.FS = this.fs + 'px';
+                }
+
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

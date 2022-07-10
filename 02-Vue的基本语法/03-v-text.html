@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-text</title>
+</head>
+<body>
+    <div id="app">
+        <p>---一般推荐使用双括号---</p>
+        <h1>{{msg}}</h1>
+        <p>---v-text会把标签内的内容覆盖---</p>
+        <h1 v-text="msg">其他内容</h1>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'v-text测试'
+                }
+            }
+        }).mount("#app");
+
+    </script>
+</body>
+</html>

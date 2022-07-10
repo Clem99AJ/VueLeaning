@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-动画</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: powderblue;
+        }
+        @keyframes shake-enter{
+            0%{
+                opacity: 1;
+                transform: translateX(0);
+            }
+            25%{
+                opacity: 0.1;
+                transform: translateX(-50px);
+            }
+            50%{
+                opacity: 1;
+                transform: translateX(0);
+            }
+            75%{
+                opacity: 0.1;
+                transform: translateX(50px);
+            }
+            100%{
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes shake-leave {
+            0%{
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+            25%{
+                opacity: 1;
+                transform: translateX(-50px);
+            }
+            50%{
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+            75%{
+                opacity: 1;
+                transform: translateX(50px);
+            }
+            100%{
+                opacity:0.1;
+                transform: translateX(0);
+            }
+        }
+        .box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .box1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .box2{
+            /*相对顶部500px固定*/
+            position: fixed;
+            top:500px;
+            /*点按钮出现手势*/
+            cursor: pointer;
+            opacity: 0.8;
+            /*边框*/
+            border: 1px solid plum;
+        }
+        .box2:hover{
+            background-color: pink;
+            opacity: 0.65;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        /*
+            在使用vue封装的动画时
+            .v-enter-from,第一个写v的话，代表的是全体套transition的标签
+            若每一个标签需要的动画不一样需要给transition标签加name
+            然后把v换成name
+        */
+        /*全部默认的动画*/
+        .v-enter-active{
+            /*
+                transition用在已有的
+                animation用在自定义的动画
+            */
+            animation:2s shake-enter;
+        }
+        .v-leave-active{
+            animation:2s shake-leave;
+        }
+        /*命名的动画*/
+        .nx-enter-from{opacity: 0}
+        .nx-enter-active{transition: all 2s ease-in-out}
+        .nx-enter-to{opacity:1}
+        .nx-leave-from{opacity: 1}
+        .nx-leave-active{transition: all 2s ease-in-out}
+        .nx-leave-to{opacity: 0}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <transition>
+                <div class="box" v-show="flag">
+                    <h3>{{msg1}}</h3>
+                </div>
+            </transition>
+            <transition name="nx" style="width: 200px;position: fixed;top: 236px">
+                <div class="box" v-show="flag">
+                    <h3>{{msg2}}</h3>
+                </div>
+            </transition>
+
+            <div class="box1">
+                <button v-on:click="flag = !flag" class="box2">change</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg1:'命名前',
+                    msg2:'命名后',
+                    flag:false
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

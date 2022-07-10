@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue的创建方式</title>
+</head>
+<body>
+    <p>组件只能在相对应注册的实例中使用</p>
+    <div id="app">
+        <h1>{{msg}}</h1>
+    </div>
+
+    <div id="root">
+        <h1>{{site}}</h1>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        //1、Vue实例1
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            }
+        }).mount("#app");
+        //2、Vue实例2
+        const root = Vue.createApp({
+            data(){
+                return{
+                    site:'https://www.mi.com'
+                }
+            }
+        }).mount("#root")
+    </script>
+</body>
+</html>

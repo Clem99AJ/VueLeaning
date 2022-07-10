@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性新用法-引用数据类型</title>
+</head>
+<body>
+    <div id="app">
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            setup(){
+                const {reactive,computed} = Vue;
+                let nObj = reactive({num:10})
+
+                let nObj2 = computed({
+                    get:()=>{
+                        return nObj.num * 10
+                    },
+                    set:(res)=>{
+                        return nObj.num  = res / 10
+                    }
+                })
+
+                setTimeout(()=>{
+                    nObj.num = 2000
+                },3000)
+
+                const add = ()=>{
+                    nObj.num += 10
+                }
+                return{
+                    nObj,
+                    nObj2,
+                    add
+                }
+            },
+            template:`
+                <div>
+                    <h2>属性：{{nObj.num}}</h2>
+                    <h2>计算属性：{{nObj2}}</h2>
+                    <button v-on:click="add">change</button>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

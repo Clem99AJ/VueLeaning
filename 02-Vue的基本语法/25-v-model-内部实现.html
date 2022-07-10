@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model基础使用</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .center1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction:column;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="center1">
+            <p>v-model使用</p>
+            <input type="text" v-model="msg">
+            <p>内部实现</p>
+            <input type="text" v-bind:value="msg" v-on:input="changeValue">
+            <p>更简化</p>
+            <input type="text" v-bind:value="msg" v-on:input="msg = $event.target.value">
+            <h1>{{msg}}</h1>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            methods:{
+                changeValue(event){
+                    this.msg = event.target.value;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

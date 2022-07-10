@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue初体验</title>
+</head>
+<body>
+    <div id="app">
+        <p>错误的示范</p>
+        <div>{{abcde}}</div>
+        <p>-----------------</p>
+        <p>正确的示范(静态的输出)</p>
+        <ul>
+            <li>{{abcde[0]}}</li>
+            <li>{{abcde[1]}}</li>
+            <li>{{abcde[2]}}</li>
+        </ul>
+        <p>-----------------</p>
+        <p>正确的示范(动态的输出)</p>
+        <ul>
+            <li v-for="item in abcde">{{item}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        //1、创建实例的配置对象
+        const listApp = {
+            data(){
+                return {
+                    abcde:['一斗','千岩','莫娜']
+                }
+            }
+        };
+        //2、创建Vue的shillings
+        const app = Vue.createApp(listApp).mount('#app');
+    </script>
+</body>
+</html>

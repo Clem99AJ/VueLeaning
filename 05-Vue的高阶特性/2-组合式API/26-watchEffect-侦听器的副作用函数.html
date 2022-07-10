@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>watchEffect</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../js/vue.js"></script>
+    <script>
+
+        const app = Vue.createApp({
+            setup(props,context){
+                const {ref,watch} = Vue
+                let brand = ref('')
+                let site = ref('')
+                /*
+                * watch侦听器
+                * 1、有惰性
+                * 2、更加具体
+                * 3、可以访问属性之前的值
+                * 4、可配置<非惰性，深度监视>
+                * */
+                /*watch([brand,site],([currentBrand,preBrand],[currentSite,preSite])=>{
+                    console.log(currentBrand,currentSite)
+                    console.log(preBrand,preSite)
+
+                },{
+                    /!*非惰性,即刷新页面后，一开始就监听*!/
+                    immediate:true,
+                    /!*深度监视*!/
+                    deep:true
+                })*/
+                /*
+                * watchEffect能侦听所有元素
+                * 1、无惰性
+                * 2、抽象
+                * 3、不可以访问之前的属性
+                * 4、可配置
+                * */
+                watchEffect({},()=>{
+
+                },{})
+                return{
+                    brand,
+                    site
+                }
+            },
+            template:`
+                <div>
+                    brand:<input type="text" placeholder="Please enter something" v-model="brand">
+                    <p>{{brand}}</p>
+                    site:<input type="text" placeholder="Please enter something" v-model="site">
+                    <p>{{site}}</p>
+                </div>
+            `
+        }).mount('#app')
+    </script>
+</body>
+</html>

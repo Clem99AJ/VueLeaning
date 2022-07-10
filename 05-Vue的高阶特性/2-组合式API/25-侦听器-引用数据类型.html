@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侦听器-引用数据类型</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            setup(props,context){
+                const {ref,reactive,watch,toRefs} = Vue
+                let eduObj = reactive({brand:'楠溪泽岸',site:'mi.com'})
+                /*侦听器，侦听一个属性,这里是侦听引用数据类型中的一个属性*/
+                watch(()=>eduObj.brand,(currentBrand,preBrand)=>{
+                    /*相应的业务*/
+                    console.log(currentBrand)
+                    console.log(preBrand)
+                },{})
+
+                const {brand,site} = toRefs(eduObj)
+                return{
+                    brand,
+                    site
+                }
+            },
+            template:`
+                <div>
+                    <input type="text" placeholder="Please enter something" v-model="brand">
+                    <p>:{{brand}}</p>
+                    <input type="text" placeholder="Please enter something" v-model="site">
+                    <p>:{{site}}</p>
+                </div>
+            `
+        }).mount('#app')
+    </script>
+</body>
+</html>

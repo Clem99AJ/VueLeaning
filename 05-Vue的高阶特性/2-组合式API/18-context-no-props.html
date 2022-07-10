@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>no-props</title>
+</head>
+<body>
+<div id="app">
+
+</div>
+<template id="box">
+
+</template>
+<script src="../js/vue.js"></script>
+<script>
+    const app = Vue.createApp({
+        data(){
+            return{
+                msg:'测试'
+            }
+        },
+        template: `
+          <div>
+            <nx-box v-bind:info="msg" style="width: 200px;height: 200px;background-color: pink"></nx-box>
+          </div>
+        `
+    });
+    app.component('nx-box',{
+        /*
+        * no-props在组合式API中，有着对应的替代
+        * const {attrs,slots,emit} = context
+        * 分别对应着no-props,插槽,自定义事件(即子传父时使用的)
+        * */
+        setup(props,context){
+            const {attrs,slots,emit} = context;
+            console.log(attrs);
+
+            return{
+
+            }
+        },
+        template:`
+          <div v-bind:sl="$attrs.info">我是子组件</div>
+          <div v-bind="$attrs">我是子组件</div>
+          <div v-bind:style="$attrs.style">我是子组件</div>
+
+        `
+    })
+    app.mount("#app");
+</script>
+</body>
+</html>

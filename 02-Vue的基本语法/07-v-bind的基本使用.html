@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind的基本使用</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <p style="color: blueviolet">原本的用法</p>
+        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/628a0172dc664f2740250ed9691b65ee.jpg?w=2452&h=920"alt="image open failed" width="300" height="140" >
+        <p style="color: blueviolet">动态绑定</p>
+        <img v-bind:src="imageUrl" v-bind:alt="alt" width="300" height="140">
+        <p>a标签的动态绑定</p>
+        <a v-bind:href="site">点我进入</a>
+        <p>简写--语法糖</p>
+        <a :href="site">语法糖写法</a>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    imageUrl:'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/628a0172dc664f2740250ed9691b65ee.jpg?w=2452&h=920',
+                    alt:"只要998",
+                    site:'https://www.baidu.com'
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

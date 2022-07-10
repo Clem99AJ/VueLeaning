@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-on参数传递</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <p>1、不带参数</p>
+        <button v-on:click="btn1Click">不带括号</button>
+        <br>
+        <button v-on:click="btn1Click()">带括号不传参数</button>
+        <br>
+        <p>2、带参数</p>
+        <button v-on:click="btn1Click(10)">传参</button>
+        <br>
+        <button v-on:click="btn2Click(10,'abcd',true,msg)">多传几个参数</button>
+        <br>
+        <p>3、带参数的同时还需要事件对象，用$符号，并且事件一般放在最后(虽然事件只认$符号，其实放哪都可以)</p>
+        <button v-on:click="btn3Click(10,'abcd',true,msg,$event)">即带参数也返回事件对象</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'在控制台查看结果'
+                }
+            },
+            methods:{
+                btn1Click(args){
+                    console.log(args);
+                },
+                btn2Click(arg1,arg2,arg3,arg4){
+                    console.log(arg1,arg2,arg3,arg4);
+                    console.log(arguments);
+                },
+                btn3Click(arg1,arg2,arg3,arg4,event){
+                    console.log(arg1,arg2,arg3,arg4,event);
+                    console.log(arguments);
+                }
+
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

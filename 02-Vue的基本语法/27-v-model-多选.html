@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model-多选</title>
+</head>
+<body>
+    <div id="app">
+        <p>1、单选</p>
+        <label><input type="checkbox" v-model="isAgree">同意协议</label>
+        <h2>是否同意协议:{{isAgree ? '同意' : '不同意'}}</h2>
+        <button v-bind:disabled="!isAgree">注册</button>
+        <p>============================================</p>
+        <p>2、多选(静态)</p>
+        <label>兴趣爱好:</label>
+        <input type="checkbox" value="篮球" v-model="hobbies">篮球
+        <input type="checkbox" value="羽毛球" v-model="hobbies">羽毛球
+        <input type="checkbox" value="足球" v-model="hobbies">足球
+        <input type="checkbox" value="乒乓球" v-model="hobbies">乒乓球
+        <h2>你的兴趣爱好为:{{hobbies}}</h2>
+
+        <div style="color: deeppink">
+            <p>3、多选(动态)</p>
+            <label v-for="star in stars" v-bind:for="star">
+                <input type="checkbox" v-bind:value="star" v-bind:id="star" v-model="likes">{{star}}
+            </label>
+            <h2>你的兴趣爱好为:{{likes}}</h2>
+        </div>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    isAgree:false,
+                    hobbies:[],
+                    stars:['萧炎','小医仙','萧熏儿','云韵'],
+                    likes:[]
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

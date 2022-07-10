@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-html</title>
+</head>
+<body>
+      <div id="app">
+          <p>###错误示范###</p>
+          {{site}}
+          <p>----------------</p>
+          <p>直接用HTML的标签(一般用于展示用,写入的不用这个，存在注入风险)</p>
+          <div v-html="site"></div>
+          <div v-html="intro"></div>
+
+          <button v-on:click="AA">click me</button>
+      </div>
+      <script src="js/vue.js"></script>
+      <script>
+          const app = Vue.createApp({
+              data(){
+                  return{
+                      site:'<a href="http://www.itlike.com">school</a>>',
+                      intro:'<button>click me</button>'
+                  }
+              },
+              methods:{
+                  AA(){
+                      alert('你点到我了！！');
+                  }
+              }
+          }).mount("#app");
+      </script>
+</body>
+</html>

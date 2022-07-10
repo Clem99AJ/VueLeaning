@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多组件实现动画</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+        }
+        .v-enter-from{
+            opacity: 0;
+        }
+        .v-enter-active{
+            transition: all 2s ease-in;
+        }
+        .v-enter-to{
+            opacity: 1;
+        }
+        .v-leave-from{
+            opacity: 1;
+        }
+        .v-leave-active{
+            transition: all 2s ease-in;
+        }
+        .v-leave-to{
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+
+            <transition mode="out-in" appear>
+                <!--切换组件的标签-->
+                <component v-bind:is="component"/>
+            </transition>
+        </div>
+        <p>------------------</p>
+        <button v-on:click="changeClick">click me</button>
+    </div>
+
+    <template id="box1">
+        <div>
+            <h1>
+                这是盒子1
+            </h1>
+        </div>
+    </template>
+    <template id="box2">
+        <div>
+            <h1>
+                这是盒子2
+            </h1>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        const Box1 = {
+            template:'#box1'
+        }
+        const Box2 = {
+            template:'#box2'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    component:'box-1'
+                }
+            },
+            components:{
+                'box-1':Box1,
+                'box-2':Box2
+            },
+            methods:{
+                changeClick(){
+                    this.component = this.component==='box-1'?'box-2':'box-1'
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

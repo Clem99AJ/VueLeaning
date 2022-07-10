@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue初体验</title>
+</head>
+<body>
+    <!--响应式编程(主流)-->
+    <div id="app">
+        <h1>{{message}}</h1>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        //0、创建实例的全局配置对象
+        const HelloVue = {
+            data(){
+                return{
+                    message:'打算大苏打'
+                }
+            }
+        };
+        //1、创建Vue的实例对象
+            //这里用了链式调用
+        const app = Vue.createApp(HelloVue).mount('#app');
+    </script>
+</body>
+</html>

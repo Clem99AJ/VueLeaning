@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>toRefs</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*
+            toRefs用来配合reactive一起使用
+            用在把reactive包装的引用数据解构
+            并且解构后也具有响应
+        */
+        const app = Vue.createApp({
+            setup(){
+                const {toRefs,reactive} = Vue;
+                let pObj = reactive({name:'萧炎',sex:'male'});
+
+                setTimeout(()=>{
+                    pObj.name = '修改后';
+                    pObj.sex = 'female';
+                },3000);
+                /*这里写了toRefs的用法*/
+                /*
+                *
+                * 原理:
+                *       proxy({name:'萧炎',sex:'male'})
+                *           -->
+                *       name:proxy({value:'萧炎'})
+                *       sex:proxy({value:'male'})
+                * */
+                const {name,sex} = toRefs(pObj);
+
+                return{
+                    name,
+                    sex
+                }
+            },
+            template:`
+                <div>
+                    <!--为了能让调用属性值，用toRefs-->
+                    <h1>姓名：{{name}},性别：{{sex}}</h1>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小案例</title>
+    <style>
+        #app{margin: 50px auto;width: 600px}
+        body{background-color: pink}
+        fieldset{border: 1px solid purple;margin-bottom: 20px}
+        fieldset input{width: 200px;height: 30px;margin: 10px 0}
+        select{margin: 10px 0}
+        button{}
+
+        table{width: 600px;border: 2px solid mediumpurple;text-align: center;border-collapse: collapse}
+        thead{background-color: mediumpurple;color:white;border-collapse: collapse}
+        tfoot{}
+        tbody{}
+        tbody th{font-weight: lighter}
+        tr{border-bottom: 1px solid mediumpurple;border-right: 1px solid mediumpurple}
+        th{border-bottom: 1px solid mediumpurple;border-right: 1px solid mediumpurple}
+        th button{background-color: mediumpurple;border: 1px solid white;color: white}
+
+        .Class1{background-color: mediumpurple;border: 1px solid white;color: white;margin-right: 5px}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>Information Entry System(Vue)</legend>
+            <div>
+                <label><input type="text" placeholder="Please enter ID" v-model.trim="newPerson.id"></label>
+            </div>
+            <div>
+                <label><input type="text" placeholder="Please enter name" v-model.trim="newPerson.name"></label>
+            </div>
+            <div>
+                <label>
+                    <select v-model="newPerson.sex">
+                        <optgroup label="默认" >
+                            <option value="男">Male</option>
+                            <option value="女">Female</option>
+                        </optgroup>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label><input type="number" placeholder="Please enter age" v-model.trim="newPerson.age"></label>
+            </div>
+            <div>
+                <label><input type="text" placeholder="Please enter phone" v-model.trim="newPerson.phone"></label>
+            </div>
+            <button v-on:click="addPerson()">Create new user</button>
+        </fieldset>
+
+        <div>
+            <p>Search</p>
+            <label><input type="text" placeholder="Search for name" v-model.lazy="searchStr"></label>
+
+            <p class="center1">Sort</p>
+            <div>
+                <button class="Class1" v-on:click="changeOrder(1)">↑</button>
+                <button class="Class1" v-on:click="changeOrder(2)">↓</button>
+                <button class="Class1" v-on:click="changeOrder(0)">-</button>
+            </div>
+        </div>
+
+        <div style="margin-top:10px">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Sex</th>
+                        <th>Age</th>
+                        <th>Phone</th>
+                        <th>Select</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(p,index) in filterPersons" v-bind:key="p.id">
+                        <th>{{index + 1}}</th>
+                        <th>{{p.id}}</th>
+                        <th>{{p.name}}</th>
+                        <th>{{p.sex}}</th>
+                        <th>{{p.age}}</th>
+                        <th>{{p.phone}}</th>
+                        <th>
+                            <label><input type="checkbox"></label>
+                        </th>
+                        <th>
+                            <button v-on:click="delPerson(index)">del</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    orderType:0,
+                    searchStr:'',
+                    newPerson:{id:'',name:'',sex:'男',age:'',phone:''},
+                    persons:[
+                        {id:1,name:'萧炎',sex:'男',age:20,phone:'15331710000'},
+                        {id:2,name:'小医仙',sex:'女',age:19,phone:'15331710001'},
+                        {id:3,name:'萧熏儿',sex:'女',age:17,phone:'15331710002'},
+                        {id:4,name:'紫妍',sex:'女',age:21,phone:'15331710003'},
+                        {id:5,name:'云韵',sex:'女',age:22,phone:'15331710004'},
+                        {id:6,name:'张曼玉',sex:'女',age:19,phone:'15331710005'},
+                        {id:7,name:'林青霞',sex:'女',age:23,phone:'15331710006'},
+                        {id:8,name:'张三',sex:'男',age:22,phone:'15331710007'},
+                        {id:9,name:'李四',sex:'男',age:20,phone:'15331710008'},
+                        {id:10,name:'李四',sex:'女',age:20,phone:'15331710009'},
+                        {id:11,name:'王五',sex:'男',age:21,phone:'15331710010'}
+                    ]
+                }
+            },
+            computed:{
+                filterPersons(){
+                    //1、取出相关属性
+                    const {searchStr,orderType,persons} = this;
+                    //2、定义过滤数组
+                    let ListArr = [...persons];
+                    //3、根据条件过滤
+                    if(searchStr.trim()){
+                        ListArr = persons.filter((p)=>{
+                            return p.name.indexOf(searchStr)!==-1;
+                        })
+                    }
+                    //4、排序
+                    if(orderType){
+                        ListArr.sort((p1,p2)=>{
+                            if(orderType===1){
+                                return p1.age - p2.age;
+                            }else{
+                                return p2.age - p1.age;
+                            }
+                        })
+                    }
+                    //5、返回过滤后的数组
+                    return ListArr;
+                }
+            },
+            methods:{
+                addPerson(){
+                    const {id,name,sex,age,phone} = this.newPerson;
+                    //1、判断
+                    if(!id||!name||!sex||!age||!phone){
+                        alert("Your must enter full information!");
+                        return;
+                    }
+                    if(typeof id!=='number'&&isNaN(id)){
+                        alert("Your should enter number for ID!");
+                        return;
+                    }
+                    if(age < 0){
+                        alert('Your should enter age more than 0');
+                        return;
+                    }
+                    //2、插入一条数据
+                    this.persons.push(this.newPerson);
+                    //3、清空数据
+                    this.newPerson = {id:'',name:'',sex:'男',age:'',phone:''};
+                },
+                delPerson(index){
+                    this.persons.splice(index,1);
+                },
+                changeOrder(order){
+                    this.orderType = order;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件初体验</title>
+</head>
+<body>
+    <div id="app">
+        <p>调用全局注册的按钮</p>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        //1、创建一个Vue实例
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            }
+        })
+        //2、注册一个全局组件(必须在挂在之前)
+        app.component('button-counter',{
+           data(){
+               return{
+                   count:0
+               }
+           },
+            template:`
+                <button v-on:click="count++">你点击了按钮{{count}}次</button>
+            `
+        });
+        //3、挂载Vue实例
+        app.mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <style>
+        .box{
+            width:200px;
+            height: 200px;
+            background-color: pink;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box1{
+            width:200px;
+            height: 200px;
+            background-color: plum;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    posData1:{
+                        top:300,
+                        left:300
+                    },
+                    posData2:{
+                        top:100,
+                        left:100
+                    }
+                }
+            },
+            template:`
+                <div class="box" v-fixed1="posData1">
+                    {{posData1}}
+                </div>
+                <div class="box1" v-fixed2="posData2">
+                    {{posData2}}
+                </div>
+            `
+        });
+        /*写法1：获取了直接写*/
+        app.directive('fixed1',(el,binding)=>{
+            console.log(el);
+            console.log(binding);
+
+            el.style.position = 'fixed';
+            el.style.left = binding.value.left + 'px';
+            el.style.top = binding.value.top + 'px';
+        });
+        /*写法2:在钩子函数中用*/
+        app.directive('fixed2',{
+                mounted(el,binding){
+                    console.log(el);
+                    console.log(binding);
+
+                    el.style.position = 'fixed';
+                    el.style.left = binding.value.left + 'px';
+                    el.style.top = binding.value.top + 'px';
+                }
+            });
+        app.mount("#app");
+    </script>
+</body>
+</html>

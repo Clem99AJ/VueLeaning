@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性-内部实现</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{fullName2}}</h1>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    firstName: '牛顿',
+                    lastName: '莱布尼兹'
+                }
+            },
+            computed:{
+                fullName1(){
+                    return this.firstName + '·' + this.lastName;
+                },
+                //计算属性getter(99%)和setter(1%)
+                fullName2:{
+                    set(newValue){
+                        console.log('---set()---',newValue);
+
+                        const nameArr = newValue.split('·');
+                        this.firstName = nameArr[0];
+                        this.lastName = nameArr[1];
+                    },
+                    get(){
+                        console.log('---get()---');
+                        return this.firstName +'·'+ this.lastName;
+                    }
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

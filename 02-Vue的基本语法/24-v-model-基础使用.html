@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model基础使用</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="msg">
+        <h1>{{msg}}</h1>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

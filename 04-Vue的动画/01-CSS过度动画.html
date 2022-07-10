@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS过度动画</title>
+    <style>
+        body,html {
+            /*flex布局*/
+            display: flex;
+            /*水平居中*/
+            justify-content: center;
+            /*垂直居中*/
+            align-items: center;
+
+        }
+        .box{
+            width:200px;
+            height: 200px;
+            color: aqua;
+            background-color: pink;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*过度动画*/
+            transition: all 2s ease;
+        }
+        /*伪类，即装过度后的最终样子*/
+        .box:hover{
+            width: 500px;
+            height: 500px;
+            color: pink;
+            background-color: aqua;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="box">
+            <h1 class="box">{{msg}}</h1>
+
+        </div>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'CSS的写法'
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

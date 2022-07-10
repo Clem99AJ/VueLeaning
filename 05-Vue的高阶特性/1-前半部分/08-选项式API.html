@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项式API</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            computed:{
+                /*计算属性*/
+            },
+            methods:{
+                /*方法*/
+            },
+            watch:{
+                /*侦听数据*/
+            },
+            template:`
+                <div>
+                    <h3>这就是选项式的API</h3>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

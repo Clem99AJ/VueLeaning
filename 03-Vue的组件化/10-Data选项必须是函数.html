@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data选项必须是函数</title>
+</head>
+<body>
+    <div id="app">
+        <lk-count></lk-count>
+    </div>
+
+    <template id="count">
+        <p>计算的结果是{{count}}</p>
+        <button v-on:click="add()">+5</button>
+        <button v-on:click="sub()">-5</button>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+        const Count = {
+            data(){
+                return{
+                    count:0
+                }
+            },
+            template:'#count',
+            methods:{
+                add(){
+                    this.count += 5;
+                },
+                sub(){
+                    this.count -= 5;
+                }
+            }
+        };
+
+
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            components: {
+                "lk-count":Count
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

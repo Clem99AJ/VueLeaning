@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>provide和inject</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*1、孙组件*/
+        const nxSon = {
+            setup(props,context){
+                const {ref,reactive,inject} = Vue
+                /*
+                    这里用inject接收数据
+                    inject('发射出来的名称','没收到数据的默认值')
+                */
+                let sonBrand = inject('brand','默认值')
+                let sonCollege = inject('college')
+                //接收修改的方法
+                const changeBrand = inject('changeBrand')
+                const change = ()=>{
+                    changeBrand('啦啦啦')
+                }
+                return{
+                    sonBrand,
+                    sonCollege,
+                    change
+                }
+            },
+            template: `
+                <div style="width: 300px;height: 300px;background-color: plum">
+                    <p>孙组件</p>
+                    <h2>品牌：{{sonBrand}}</h2>
+                    <h2>大学：{{sonCollege.city}}</h2>
+                    <button v-on:click="change">change</button>
+                </div>
+            `
+        }
+        /*2、子组件*/
+        const nxFather ={
+            components:{
+                'nx-son':nxSon
+            },
+            setup(props,context){
+                return{
+
+                }
+            },
+            template:`
+                <div style="width: 400px;height: 400px;background-color: aqua">
+                    <p>父组件</p>
+                    <nx-son></nx-son>
+                </div>
+            `
+        }
+        const app = Vue.createApp({
+            components: {
+                'nx-father':nxFather
+            },
+            setup(props,context){
+                /*
+                    provide可以把数据发射出去
+                    inject可以把数据接收
+                */
+                const {ref,reactive,provide,readonly} = Vue
+                let brand = ref('五彩棒')
+                let college = reactive({city:'上海',site:'mi.com'})
+                /*
+                    发射数据
+                    这里很像java
+                    对于该组件的数据，得写成私有的
+                    如果想修改该组件中的值
+                    得在该组件中写set方法
+                */
+                provide('brand',readonly(brand))
+                provide('college',readonly(college))
+                const changeBrand = (value)=>{
+                    brand.value = value;
+                }
+                provide('changeBrand',changeBrand)
+                return{
+                    brand,
+                    college,
+                    changeBrand
+                }
+            },
+            template:`
+                <div style="width: 500px;height: 500px;background-color:deepskyblue">
+                    <p>爷爷组件</p>
+                    <nx-father></nx-father>
+                </div>
+            `
+        }).mount('#app')
+    </script>
+</body>
+</html>

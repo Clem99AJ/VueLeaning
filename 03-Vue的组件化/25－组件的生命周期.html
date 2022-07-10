@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件的生命周期</title>
+</head>
+<body>
+    <div id="app">
+        <!--<h1>{{msg}}</h1>-->
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            //生命周期函数，在一个组件的生命周期范围内  某一时刻会自动执行的函数
+            //1、beforeCreate()函数，在组件生成之前自动执行
+            beforeCreate(){
+                console.log('beforeCreate()');
+            },
+            //2、created()函数，在组件生成之后自动执行
+            created(){
+                console.log('created');
+            },
+            /*
+            *在这里会有一个分支
+            * 判断是否存在template:``
+            * 1、如果存在，编译成render函数，然后渲染
+            * 2、如果不存在，去id=“app”的标签内寻找
+            * */
+            //3、beforeMount()函数，在组件内容被渲染之前自动调用
+            beforeMount(){
+                console.log('--------------');
+                console.log(document.getElementById('app').innerHTML);
+                console.log('beforeMount()');
+                console.log('--------------');
+
+            },
+            //4、mounted()函数，在组件内容渲染之后自动调用
+            mounted(){
+                console.log('--------------');
+                console.log(document.getElementById('app').innerHTML);
+                console.log('mounted()');
+                console.log('--------------');
+            },
+            //5、beforeUpdate(),在数据更新之前自动调用
+            beforeUpdate(){
+                console.log('--------------');
+                console.log(document.getElementById('app').innerHTML);
+                console.log('beforeUpdate()');
+                console.log('--------------');
+
+            },
+            //6、updated(),在数据更新之后,且页面也更新完成时调用
+            updated(){
+                console.log('--------------');
+                console.log(document.getElementById('app').innerHTML);
+                console.log('updated()');
+                console.log('--------------');
+            },
+            //7、beforeUnMount(),当Vue实例失效时，自动执行函数
+            beforeUnmount(){
+                console.log('--------------');
+                console.log(document.getElementById('app').innerHTML);
+                console.log('beforeUnmount()');
+                console.log('--------------');
+            },
+            //8、unmounted(),当Vue实例失效完成时，自动执行函数
+            unmounted(){
+                console.log('--------------');
+                console.log(document.getElementById('app').innerHTML);
+                console.log('unmounted()');
+                console.log('--------------');
+            },
+            //9、全局的错误捕获return false;可以防止子组件把错误冒泡给父组件，即错误截止到当前组件
+            /*
+            * err--错误对象
+            * instance--Vue实例
+            * info--是 Vue 特定的错误信息，比如错误所在的生命周期钩子
+            * */
+            errorCaptured(err,instance,info){
+                console.log(err,instance,info);
+            },
+            template:`
+                <h1>{{msg}}</h1>
+            `
+        });
+        app.mount("#app");
+
+        setTimeout(()=>{
+            app.unmount('#app')
+        },3000)
+    </script>
+</body>
+</html>

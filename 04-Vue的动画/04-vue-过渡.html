@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue动画</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: powderblue;
+        }
+        .box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .box1{
+            display: flex;justify-content: center;align-items: center
+        }
+        /*Vue封装的动画类*/
+        /*入场动画类*/
+        /*从什么地方来*/
+        .v-enter-from{
+            /*一开始透明度为0*/
+            opacity: 0;
+        }
+        /*中间干什么*/
+        .v-enter-active{
+            /*过度时间即动画*/
+            transition: all 2s linear;
+        }
+        /*到什么地方去*/
+        .v-enter-to{
+            opacity: 1;
+        }
+        /*离场动画类*/
+        /*从什么地方来*/
+        .v-leave-from{
+            opacity: 1;
+        }
+        /*中间干什么*/
+        .v-leave-active{
+            transition: all 2s linear;
+        }
+        /*到什么地方去*/
+        .v-leave-to{
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <!--要用vue的动画，要用transition包裹-->
+            <transition>
+                <div  class="box" v-show="flag">
+                    <h3>{{msg}}</h3>
+                </div>
+            </transition>
+
+            <div class="box1">
+                <button v-on:click="change" >Display</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    flag:false
+                }
+            },
+            methods:{
+                change(){
+                    this.flag = !this.flag;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind动态绑定(数组方式的用法)</title>
+    <style>
+        .red{
+            color: red;
+        }
+        .blue{
+            color: blue;
+        }
+        .f60{
+            font-size: 60px;
+        }
+        .box{
+
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p>原始用法</p>
+        <h2 class="red f60">原始用法{{msg}}</h2>
+        <p>动态绑定数组用法</p>
+        <h2 :class="[C1,F60]">{{msg}}</h2>
+        <p>可以使用一个函数把样式整理到一起,返回一个数组</p>
+        <h2 :class="getClass()">{{msg}}</h2>
+        <p>按钮控制对象</p>
+        <button @click="changeC1()">换色</button>
+        <br>
+        <button @click="changeC1TF()">开启或关闭颜色</button>
+        <br>
+        <button @click="changeTF()">改大小</button>
+        <h2 :class="{[C1]:isC1,[F60]:isF60}">{{msg}}</h2>
+
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    C1:'red',
+                    F60:'f60',
+                    isC1:true,
+                    isF60:true,
+                }
+            },
+            methods:{
+                getClass(){
+                  return [this.C1,this.F60];
+                },
+                changeC1(){
+                    this.C1 = this.C1 === 'red' ? 'blue':'red';
+                },
+                changeTF(){
+                    this.isF60 = !this.isF60;
+                },
+                changeC1TF(){
+                    this.isC1 = !this.isC1;
+                }
+
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

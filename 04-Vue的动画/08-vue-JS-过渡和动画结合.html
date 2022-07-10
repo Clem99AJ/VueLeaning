@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过渡和动画结合</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: powderblue;
+        }
+        @keyframes shake-enter{
+            0%{
+                opacity: 1;
+                transform: translateX(0);
+            }
+            25%{
+                opacity: 0.1;
+                transform: translateX(-50px);
+            }
+            50%{
+                opacity: 1;
+                transform: translateX(0);
+            }
+            75%{
+                opacity: 0.1;
+                transform: translateX(50px);
+            }
+            100%{
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes shake-leave {
+            0%{
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+            25%{
+                opacity: 1;
+                transform: translateX(-50px);
+            }
+            50%{
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+            75%{
+                opacity: 1;
+                transform: translateX(50px);
+            }
+            100%{
+                opacity:0.1;
+                transform: translateX(0);
+            }
+        }
+        .box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .box1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box2{
+            /*相对顶部500px固定*/
+            position: fixed;
+            top:500px;
+            /*点按钮出现手势*/
+            cursor: pointer;
+            opacity: 0.8;
+            border: 1px solid plum;
+        }
+        .box2:hover{
+            background-color: pink;
+            opacity: 0.65;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        /*全部默认的动画*/
+        .v-enter-active{
+            /*过渡*/
+            transition:all 2s ease-in-out;
+            /*动画*/
+            animation:2s shake-enter;
+        }
+        .v-leave-active{
+            /*过渡*/
+            transition: all 2s ease-in-out;
+            /*动画*/
+            animation:2s shake-leave;
+        }
+        /*命名的动画*/
+        .nx-enter-from{opacity: 0}
+        .nx-enter-active{transition: all 2s ease-in-out}
+        .nx-enter-to{opacity:1}
+        .nx-leave-from{opacity: 1}
+        .nx-leave-active{transition: all 2s ease-in-out}
+        .nx-leave-to{opacity: 0}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <!--
+                :css="false"属性可以使这个标签不识别上面定义的css样式
+
+            -->
+            <transition :duration="{enter:2000,leave:2000}"
+                v-bind:css="false"
+                        @before-enter="beforeEnter"
+                        @enter="enter"
+                        @after-enter="afterEnter"
+
+            >
+                <div class="box" v-show="flag">
+                    <h3>{{msg1}}</h3>
+                </div>
+            </transition>
+            <transition name="nx" style="width: 200px;position: fixed;top: 236px">
+                <div class="box" v-show="flag">
+                    <h3>{{msg2}}</h3>
+                </div>
+            </transition>
+
+            <div class="box1">
+                <button v-on:click="flag = !flag" class="box2">change</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg1:'命名前',
+                    msg2:'命名后',
+                    flag:false
+                }
+            },
+            methods:{
+                beforeEnter(el){
+                    /*使用el.style可以更改样式*/
+                    el.style.borderRadius='0%'
+                },
+                enter(el,done){
+                    //计时器，这里指一秒调用一次程序体
+                    const  intervalId = setInterval(()=>{
+                        const radius = el.style.borderRadius;
+                        el.style.borderRadius = radius==='0%'? '50%':'0%';
+                        el.style.opacity = radius==='0%'?0.7:1;
+                    },1000)
+
+                    //5s之后让动画完成,即清除计时器，并且调用done函数，该函数就是结束动画的
+                    setTimeout(()=>{
+                        clearInterval(intervalId);
+                        done();
+                        el.style.borderRadius='0%';
+                    },5000)
+                },
+                afterEnter(el){
+                    alert("动画已完成");
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-if小案例</title>
+</head>
+<body>
+    <div id="app">
+        <h1>v-if切换内容会删除</h1>
+        <div v-if="loginType==='phone'">
+            <lable>Phone:</lable><br>
+            <input type="text" placeholder="请输入手机号"><br>
+            <input type="password" placeholder="请输入密码">
+        </div>
+        <div v-else-if="loginType==='email'">
+            <labe>Email</labe><br>
+            <input type="text" placeholder="Please enter your email"><br>
+            <input type="password" placeholder="Please enter your password">
+        </div>
+        <button v-on:click="change()">Change Login Way</button>
+        <h1>v-show切换内容不会删除</h1>
+        <div v-show="loginType==='phone'">
+            <lable>Phone:</lable><br>
+            <input type="text" placeholder="请输入手机号"><br>
+            <input type="password" placeholder="请输入密码">
+        </div>
+        <div v-show="loginType==='email'">
+            <labe>Email</labe><br>
+            <input type="text" placeholder="Please enter your email"><br>
+            <input type="password" placeholder="Please enter your password">
+        </div>
+        <button v-on:click="change()">Change Login Way</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    loginType:'phone'//email
+                }
+            },
+            methods:{
+                change(){
+                    this.loginType = this.loginType==='phone'?'email':'phone';
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

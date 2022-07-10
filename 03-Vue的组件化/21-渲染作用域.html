@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>渲染作用域</title>
+</head>
+<body>
+    <div id="app">
+        <b-box v-show="isShow"></b-box>
+    </div>
+    <template id="box">
+        <div style="width: 200px;height: 200px;background-color: mediumpurple">
+            <button v-show="isShow">点我</button>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        const Box = {
+            data(){
+                return{
+                    isShow:true
+                }
+            },
+            methods:{
+
+            },
+            template:'#box'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    isShow:true
+                }
+            },
+            components:{
+                'bBox':Box
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

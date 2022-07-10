@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin初体验</title>
+    <link href="../css/my.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div id="app1">
+
+    </div>
+
+    <div id="app2">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const MyMixin = {
+            //这里在mixin中写了一个自定义属性，需要在实例中调用
+            age:100
+        }
+        const app1 = Vue.createApp({
+            mounted() {
+                console.log(this.$options)
+            },
+            data(){
+              return{
+                  msg:'实例的所有属性都存放在一个叫做  $options  的东西里，如果需要调用像自定义属性，需要用$options'
+              }
+            },
+            methods:{
+                hello(){
+                    alert('Hello')
+                }
+            },
+            mixins:[MyMixin],
+
+            template:`
+                <h2>{{msg}}</h2>
+                <!--实例的所有属性都存放在一个叫做  $options  的东西里，如果需要调用像自定义属性，需要用$options-->
+                <h2>{{this.$options.age}}</h2>
+                <button v-on:click="hello" class="box2">hello</button>
+            `
+        });
+
+        app1.mount("#app1");
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作用域插槽</title>
+</head>
+<body>
+    <div id="app">
+        <b-box></b-box>
+        <p>---------------------</p>
+
+        <b-box>
+            <!--
+                v-slot:default="pArr"这里指用pArr接收下面<slot :data="personArr">传来的数据
+            -->
+            <template  v-slot:default="pArr">
+                <p>{{pArr.data.join('===')}}</p>
+            </template>
+        </b-box>
+        <p>-----------------------</p>
+        <b-box>
+            <!--{data}称为解构，意思就是取出key为data的值-->
+            <template  v-slot:default="{data}">
+                <p>{{data.join('---')}}</p>
+            </template>
+        </b-box>
+    </div>
+
+    <template id="box">
+        <div style="background-color: pink;height: 200px;width: 500px;margin: 20px">
+            <!--这样可以动态传递personArr出去作用域-->
+            <slot :data="personArr">
+                <ul v-for="p in personArr">
+                    <li>{{p}}</li>
+                </ul>
+            </slot>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        const Box = {
+            data(){
+                return{
+                    personArr: ['萧炎','小医仙','萧熏儿','云韵']
+                }
+            },
+            template:'#box'
+
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+
+                }
+            },
+            components:{
+                'b-box':Box
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data选项问题</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <h2>组件中要用的数据，不能直接在实例中定义</h2>
+        <lk-count></lk-count>
+
+        <lk-box></lk-box>
+    </div>
+
+    <!--2、使用template标签-->
+    <template id="lk_count">
+        <button v-on:click="count++">Click this button is {{count}}</button>
+        <h2>{{msg}}</h2>
+    </template>
+    <template id="lk_box">
+        <div style="height: 200px;width: 200px;background-color: mediumpurple">
+            盒子组件
+            <lk-cc></lk-cc>
+
+        </div>
+    </script>
+
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        const Counter = {
+            data(){
+                return{
+                    count:0,
+                    msg:'百度一下'
+                }
+            },
+            template:'#lk_count'
+        };
+        const Box = {
+            components: {
+              'lk-cc':Counter
+            },
+            template:'#lk_box'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            components:{
+                'lk-count':Counter,
+                'lk-box':Box
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

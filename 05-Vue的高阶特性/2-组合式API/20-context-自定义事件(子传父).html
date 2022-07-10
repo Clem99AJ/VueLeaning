@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件通讯-子传父</title>
+</head>
+<body>
+<div id="app" style="background-color: pink;height: 300px;width: 300px;padding: 20px 20px 20px 20px">
+    <!--
+        这里监听的是，组件中发射的自定义事件boxClick
+        遇到驼峰命名，处理方法同上
+        v-on:box-click="boxFun"
+    -->
+    <b-box v-on:box-click="boxFun"></b-box>
+</div>
+<!--
+这里放这组件的内容
+即把组件标签化
+但是记得给标签加上id
+例如：这里的id="box"
+组件内加了按钮监听点击
+-->
+<template id="box">
+    <div style="background-color: mediumpurple;height: 200px;width: 200px">
+        <button v-on:click="btnClick">点我</button>
+    </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+    const Box = {
+        setup(props,context){
+            const {emit} = context
+            function btnClick(){
+                alert('你点击了我')
+                //发射一个自定义事件
+                const obj = {name:'萧炎',age:21,sex:'male'}
+                //这里发射事件，使用即在上面的v-on:boxClick,后面的值就是传给父来用的值
+                emit('boxClick',obj)
+            }
+            return{
+                btnClick
+            }
+        },
+        template:"#box",
+
+    }
+    const app = Vue.createApp({
+        data(){
+            return{
+                msg:'基础模板'
+            }
+        },
+        components:{
+            'b-box':Box
+        },
+        methods: {
+            //接收子组件传来的值，并在控制台打印
+            boxFun(item) {
+                console.log('你点击了子组件中的按钮');
+                console.log(item);
+            }
+        }
+    }).mount("#app");
+</script>
+</body>
+</html>

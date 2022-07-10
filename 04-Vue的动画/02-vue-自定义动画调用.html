@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义动画调用</title>
+    <style>
+        @keyframes shake {
+            0%{
+                transform: translateX(0);
+            }
+            25%{
+                transform: translateX(50px);
+            }
+            50%{
+                transform: translateX(0);
+            }
+            75%{
+                transform: translateX(-50px);
+            }
+            100%{
+                transform: translateX(0);
+            }
+        }
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box{
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .animate{
+            /*
+                animation--把动画绑定到标签或盒子
+                shake--绑定的动画
+                2s--动画完成时间
+                infinite--是否反复
+                alternate--是否一直
+            */
+            animation: shake 2s infinite alternate;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div >
+            <div class="box" v-bind:class="{animate:isAnimate}">
+                <h3>{{msg}}</h3>
+            </div>
+            <div style="display: flex;justify-content: center;align-items: center">
+                <button v-on:click="change">click me</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    isAnimate:false
+                }
+            },
+            methods:{
+                change(){
+                    this.isAnimate = !this.isAnimate
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

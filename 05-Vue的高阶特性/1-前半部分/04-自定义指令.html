@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*
+        * 自定义指令
+        * 1、自定义全局指令
+        * 2、自定义局部指令
+        * */
+
+        //自定义局部指令,有点像自定义局部组件的操作
+        const nxDirective = {
+            focus2:{
+                mounted(el){
+                    el.focus()
+                }
+            }
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            /*挂在局部组件*/
+            directives:nxDirective,
+            template:`
+                <div>
+                    <!--这里因为焦点只能存在一个，所以只看得到第二个-->
+                    <input placeholder="请输入点啥" v-focus1>
+                    <input placeholder="请输入点啥" v-focus2>
+                </div>
+            `
+        });
+        /*自定义局部指令 ,directive('名称',{指令干什么})*/
+        app.directive('focus1',{
+            mounted(el){
+                el.focus();
+            }
+        });
+        app.mount("#app");
+    </script>
+</body>
+</html>

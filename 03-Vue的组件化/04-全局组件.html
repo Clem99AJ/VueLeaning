@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue全局组件</title>
+</head>
+<body>
+    <div id="app">
+        <div id="home">
+            <span>Home</span>
+            <lk-box>
+                <p>不能在解析实例后再调用另一个组件</p>
+                <lk-box></lk-box>
+            </lk-box>
+        </div>
+        <div id="message">
+            <span>Message</span>
+        </div>
+        <div id="mine">
+            <span>Mine</span>
+        </div>
+        <button-counter></button-counter>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基本模板'
+                }
+            }
+        });
+        //按钮组件
+        app.component('button-counter',{
+            data(){
+                return{
+                    count:0
+                }
+            },
+            template:`
+                <button v-on:click="count++">Your click this button is {{count}}</button>
+            `
+        });
+        //盒子组件
+        app.component('lk-box',{
+            template:`
+                <div style="width: 200px;height: 200px;background-color: mediumpurple">
+                    盒子组件
+                    <p>如果要相互调用组件，得在注册得时候做好,不能在在实例解析后在调用</p>
+                    <button-counter></button-counter>
+                </div>
+            `
+        });
+
+        app.mount("#app");
+
+
+    </script>
+</body>
+</html>

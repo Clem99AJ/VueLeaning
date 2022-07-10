@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue调用过度动画</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .box{
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            width: 200px;
+            height: 200px;
+            /*border-radius: 25px;代表圆角*/
+            border-radius: 10px;
+        }
+        .transition{
+            transition: background-color 2s linear;
+        }
+
+        .pink{
+            background-color: pink;
+        }
+        .mediumpurple{
+            background-color: mediumpurple;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <div class="box transition" v-bind:class="{[Pink]:isPink,[Mediumpurple]:isMediumpurple}">{{msg}}</div>
+            <div style="display: flex;justify-content: center;align-items: center">
+                <button v-on:click="change">Change</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    isPink:true,
+                    isMediumpurple:false,
+                    /*这里为了在上面复习ES6的新语法，所以把背景颜色样式放到这里变量中，上面需要解析时，需要加上[]*/
+                    Pink:'pink',
+                    Mediumpurple:'mediumpurple'
+
+                }
+            },
+            methods:{
+                change(){
+                    /*两个变量交换，不用第三个变量*/
+                    this.isPink = this.isPink ^ this.isMediumpurple;
+                    this.isMediumpurple = this.isPink ^ this.isMediumpurple;
+                    this.isPink = this.isPink ^ this.isMediumpurple;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

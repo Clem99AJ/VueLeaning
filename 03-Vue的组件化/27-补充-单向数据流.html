@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单向数据流</title>
+</head>
+<body>
+    <div id="app">
+        <nx-box v-bind:total="count"></nx-box>
+    </div>
+
+    <template id="box">
+        <div>
+            <p>传过来的值是只读</p>
+            <h2>传递的值：{{total}}</h2>
+            <button v-on:click="total++">click me</button>
+            <p>-------------------------</p>
+            <p>需要修改的话，需要创建新的自己的值，修改不影响父组件的值</p>
+            <h2>自己的值：{{MyTotal}}</h2>
+            <button v-on:click="MyTotal++">click me</button>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        const NXBox = {
+            props:{
+                total:Number,
+
+            },
+            data(){
+                return{
+                    MyTotal:this.total
+
+                }
+            },
+            template:'#box'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    count:100
+                }
+            },
+            components:{
+                'nx-box':NXBox
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

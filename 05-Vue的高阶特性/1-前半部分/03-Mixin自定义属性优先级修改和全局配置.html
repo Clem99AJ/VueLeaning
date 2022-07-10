@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin初体验</title>
+    <link href="../css/my.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div id="app1">
+
+    </div>
+
+    <div id="app2">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const MyMixin = {
+            //这里在mixin中写了一个自定义属性，需要在实例中调用
+            age:100
+        }
+        const app1 = Vue.createApp({
+            age:99,
+            mounted() {
+                console.log(this.$options)
+            },
+            data(){
+              return{
+                  msg:'可以通过app的配置来修改，数据和函数的优先级，默认的是app实例中的优先级高于mixin中的'
+              }
+            },
+            methods:{
+                hello(){
+                    alert('Hello')
+                }
+            },
+            mixins:[MyMixin],
+
+            template:`
+                <h2>{{msg}}</h2>
+                <!--实例的所有属性都存放在一个叫做  $options  的东西里，如果需要调用像自定义属性，需要用$options-->
+                <h2>{{this.$options.age}}</h2>
+                <button v-on:click="hello" class="box2">hello</button>
+            `
+        });
+        /*可以通过app的配置来修改，数据和函数的优先级，默认的是app实例中的优先级高于mixin中的*/
+        app1.config.optionMergeStrategies.age = (mixinValue,appValue)=>{
+            /*mixinValue || appValue这个代表前面的优先级高于后面*/
+            return mixinValue || appValue;
+        }
+        app1.mount("#app1");
+
+        /*全局配置mixin*/
+        app1.mixins({
+            /*这里面写配置内容*/
+        })
+    </script>
+</body>
+</html>

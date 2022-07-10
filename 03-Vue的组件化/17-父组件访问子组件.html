@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件访问子组件</title>
+</head>
+<body>
+    <div id="app">
+        <!--
+            给子组件一个ref="box1"
+        -->
+        <b-box ref="box1"></b-box>
+        <!--
+            这里在父组件中写了一个按钮
+            点击时调用函数
+            在函数中使用this.$refs.box1就可访问子组件中的数据
+            例：this.$refs.box1.msg可以得到里面的内容
+        -->
+        <button v-on:click="getChildComponent">获取子组件</button>
+    </div>
+
+    <template id="box">
+        <div style="background-color: pink;width: 200px;height: 200px">
+            <button v-on:click="btnClick">Click Me</button>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+        const Box = {
+            data(){
+                return{
+                    msg:'这是子组件中的内容'
+                }
+            },
+            methods:{
+                btnClick(){
+                    alert("你点击了按钮");
+                }
+            },
+            template:'#box'
+
+        }
+
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            components:{
+                'b-box':Box
+            },
+            methods:{
+                /*这里使用this.$refs.box1.msg访问了子组件中的内容*/
+                getChildComponent(){
+                    console.log(this.$refs.box1.msg);
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

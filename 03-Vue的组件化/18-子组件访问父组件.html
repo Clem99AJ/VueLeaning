@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子组件访问父组件</title>
+</head>
+<body>
+    <div id="app">
+
+        <nx-box></nx-box>
+    </div>
+
+    <template id="NXButton">
+            <button v-on:click="btnClick">You click the button {{count}} times</button>
+    </template>
+
+    <template id="NXBox">
+        <div style="background-color: mediumpurple;width: 200px;height: 200px">
+            <nx-button></nx-button>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+        const NXButton = {
+            data() {
+                return{
+                    count:0
+                }
+            },
+            template:'#NXButton',
+            methods:{
+                btnClick(){
+                    this.count++;
+                    //1、子组件访问父组件内容
+                    alert(this.$parent.msg);
+                    console.log(this.$parent.msg);
+                    //2、子组件访问根组件内容
+                    alert(this.$root.msg);
+                    console.log(this.$root.msg);
+                }
+            }
+        }
+        const NXBox = {
+            data(){
+                return{
+                    msg:'这是父组件的内容'
+                }
+            },
+            components:{
+                'nxButton':NXButton
+            },
+            template:'#NXBox'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'这是根组件内容'
+                }
+            },
+            components:{
+                'nxBox':NXBox
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

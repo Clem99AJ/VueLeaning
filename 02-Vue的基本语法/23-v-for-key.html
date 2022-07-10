@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for-key</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+        }
+        table{
+            border-style: solid;
+            border-color: aquamarine;
+            border-top: 1px;
+            border-left: 1px;
+            border-collapse: collapse;
+        }
+        tr{
+            border-style: solid;
+            border-color: aquamarine;
+            border-bottom: 1px;
+            border-right: 1px;
+            border-collapse: collapse;
+        }
+        th{
+            border-style: solid;
+            border-color: aquamarine;
+            border-bottom: 1px;
+            border-right: 1px;
+            border-collapse: collapse;
+        }
+        .center1{
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            flex-direction: column;
+        }
+        .center2{
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="center1">
+            <p>添加信息</p>
+            <label>ID:<input type="text" v-model="id" placeholder="Enter a ID"></label><br>
+            <label>Name:<input type="text" v-model="name" placeholder="Enter the name"></label><br>
+            <label>Sex:<input type="text" v-model="sex" placeholder="Enter the sex"></label><br>
+            <label>Age:<input type="text" v-model="age" placeholder="Enter the age"></label><br>
+            <label>Phone:<input type="text" v-model="phone" placeholder="Enter the phone"></label><br>
+            <button v-on:click="addPerson()">添加</button><br>
+        </div>
+        <div class="center1">
+            <p>搜索</p>
+            <label><input type="text" placeholder="请输入搜索的姓名" v-model.lazy="searchStr"></label>
+        </div>
+        <p class="center1">排序</p>
+        <div class="center2">
+            <button v-on:click="changeOrder(1)">升序↑</button>
+            <button v-on:click="changeOrder(2)">降序↓</button>
+            <button v-on:click="changeOrder(0)">还原</button>
+        </div>
+        <p>======================================</p>
+        <div class="center1">
+            <details>
+                <summary>Click here to get chart</summary>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Sex</th>
+                            <th>Age</th>
+                            <th>Phone</th>
+                            <th>select</th>
+                        </tr>
+
+                        <tr v-for="p in filterPersons" v-bind:key="p.id">
+                            <th>{{p.id}}</th>
+                            <th>{{p.name}}</th>
+                            <th>{{p.sex}}</th>
+                            <th>{{p.age}}</th>
+                            <th>{{p.phone}}</th>
+                            <th><input type="checkbox"></th>
+                        </tr>
+                    </table>
+
+            </details>
+
+        </div>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    orderType:0,
+                    searchStr:'',
+                    id:'',
+                    name:'',
+                    sex:'',
+                    age:'',
+                    phone:'',
+                    persons:[
+                        {id:1,name:'萧炎',sex:'男',age:20,phone:'15331710000'},
+                        {id:2,name:'小医仙',sex:'女',age:19,phone:'15331710001'},
+                        {id:3,name:'萧熏儿',sex:'女',age:17,phone:'15331710002'},
+                        {id:4,name:'紫妍',sex:'女',age:21,phone:'15331710003'},
+                        {id:5,name:'云韵',sex:'女',age:22,phone:'15331710004'},
+                        {id:6,name:'张曼玉',sex:'女',age:19,phone:'15331710005'},
+                        {id:7,name:'林青霞',sex:'女',age:23,phone:'15331710006'},
+                        {id:8,name:'张三',sex:'男',age:22,phone:'15331710007'},
+                        {id:9,name:'李四',sex:'男',age:20,phone:'15331710008'},
+                        {id:10,name:'李四',sex:'女',age:20,phone:'15331710009'},
+                        {id:11,name:'王五',sex:'男',age:21,phone:'15331710010'}
+                     ]
+                }
+            },
+            computed:{
+                filterPersons(){
+                    //1、取出相关属性
+                    const {searchStr,orderType,persons} = this;
+                    //2、定义过滤数组
+                    let ListArr = [...persons];
+                    //3、根据条件过滤
+                    if(searchStr.trim()){
+                        ListArr = persons.filter((p)=>{
+                            return p.name.indexOf(searchStr)!==-1;
+                        })
+                    }
+                    //4、排序
+                    if(orderType){
+                        ListArr.sort((p1,p2)=>{
+                            if(orderType===1){
+                                return p1.age - p2.age;
+                            }else{
+                                return p2.age - p1.age;
+                            }
+                        })
+                    }
+                    //5、返回过滤后的数组
+                    return ListArr;
+                }
+            },
+            methods:{
+                addPerson(){
+                    //尾插法
+                    this.persons.push({id:this.id,name:this.name,sex:this.sex,age:this.age,phone:this.phone});
+                    //头插法
+                    //this.persons.unshift({id:this.id,name:this.name,sex:this.sex,age:this.age,phone:this.phone});
+                    //中间插入
+                    /*
+                    * splice(index,len,[item])
+                    * index:数组开始下标
+                    * len: 替换/删除的长度
+                    * item:替换的值，删除操作的话 item为空
+                    * */
+                    //this.persons.splice(3,0,{id:this.id,name:this.name,sex:this.sex,age:this.age,phone:this.phone});
+                },
+                changeOrder(order){
+                    this.orderType = order;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

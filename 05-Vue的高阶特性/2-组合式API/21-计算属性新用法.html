@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性新用法</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            setup(){
+                /*使用计算属性时，需要定义计算属性computed*/
+                const {ref,computed} = Vue
+                let num1 = ref(10)
+                //计算属性
+                let num2 = computed(()=>{
+                    console.log('=========')
+                    return num1.value * 10
+                })
+
+                /*使用ES6定义函数*/
+                const add = ()=>{
+                    console.log('---来了---')
+                    num1.value+=10
+                }
+                return{
+                    num1,
+                    num2,
+                    add
+                }
+            },
+            template:`
+                <div>
+                    <h2>计算属性:{{num1}} * 10 = {{num2}}</h2>
+                </div>
+                <button v-on:click="add">change</button>
+            `
+        }).mount("#app")
+    </script>
+</body>
+</html>

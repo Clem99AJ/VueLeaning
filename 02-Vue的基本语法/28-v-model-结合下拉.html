@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model结合下拉</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>1、单选</h2>
+            <p>选择所在的城市</p>
+            <select name="city" v-model="city">
+                <optgroup label="第一区">
+                    <option value="上海">上海</option>
+                    <option value="北京">北京</option>
+                    <option value="南京">南京</option>
+                </optgroup>
+                <optgroup label="第二区">
+                    <option value="上海">上海</option>
+                    <option value="北京">北京</option>
+                    <option value="南京">南京</option>
+                </optgroup>
+            </select>
+            <h3>{{city}}</h3>
+            <p>===============================</p>
+            <h2>2、多选(一般不用)</h2>
+            <p>选择一堆城市</p>
+            <select name="cities" v-model="cities" multiple>
+                <optgroup label="第一区">
+                    <option value="上海">上海</option>
+                    <option value="北京">北京</option>
+                    <option value="南京">南京</option>
+                </optgroup>
+                <optgroup label="第二区">
+                    <option value="上海">上海</option>
+                    <option value="北京">北京</option>
+                    <option value="南京">南京</option>
+                </optgroup>
+            </select>
+            <h3>{{cities}}</h3>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    city:'上海',
+                    cities:[]
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

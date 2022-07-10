@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>局部组件</title>
+</head>
+<body>
+    <div id="app">
+        <p>局部组件使用变量在实例外定义</p>
+        <p>在实例内用components注册</p>
+        <p>
+            使用键值对的形式
+            'lk-count':Counter
+        </p>
+        <lk-count></lk-count>
+
+        <p>若需要局部组件之间相互使用</p>
+        <p>则需要在局部组件中注册局部组件</p>
+        <p>使用components</p>
+        <lk-box></lk-box>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const Counter = {
+            data(){
+                return{
+                    count:0
+                }
+            },
+            template:`
+                <button v-on:click="count++">Your click this button is {{count}}</button>
+            `
+        };
+        const Box = {
+            components: {
+              'lk-cc':Counter
+            },
+            template:`
+                <div style="width: 200px;height: 200px; background-color: mediumpurple">
+                    <lk-cc></lk-cc>
+                </div>
+            `
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板'
+                }
+            },
+            components:{
+                'lk-count':Counter,
+                'lk-box':Box
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

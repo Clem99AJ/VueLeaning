@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多组元素实现动画</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .v-enter-from{
+            opacity: 0;
+        }
+        .v-enter-active{
+            transition: all 2s linear;
+        }
+        .v-enter-to{
+            opacity: 1;
+        }
+        .v-leave-from{
+            opacity: 1;
+        }
+        .v-leave-active{
+            transition: all 2s linear;
+        }
+        .v-leave-to{
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+
+            <div class="box">
+                <!--
+                    想让组件切换过渡不冲突，那就使用mode属性，
+                    mode="out-in"先出后进，反之先进后出
+                    appear属性，使刷新出来也有动画
+                -->
+                <transition mode="out-in" appear>
+                    <button v-if="flag">点我</button>
+                    <h1 v-else>{{msg}}</h1>
+                </transition>
+            </div>
+
+
+
+            <div class="box">
+                <button v-on:click="change" style="position: fixed;top: 500px;cursor: pointer;">change</button>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    flag:true
+                }
+            },
+            methods:{
+                change(){
+                    this.flag= !this.flag;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

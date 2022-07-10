@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件通讯-父传子</title>
+</head>
+<body>
+    <div id="app">
+        <!--Home-->
+        <div id="home">
+            <span>Home</span>
+            <b-box msg1="百度" v-bind:msg2="['VR','AR']"></b-box>
+        </div>
+        <!--Message-->
+        <div id="message">
+            <span>Message</span>
+            <b-box msg1="谷歌" v-bind:msg2="['HTML','CSS']"></b-box>
+        </div>
+        <!--Mine-->
+        <div id="mine">
+            <span>Mine</span>
+            <b-box msg1="酷酷酷" v-bind:msg2="['Java','Web']"></b-box>
+        </div>
+
+        <b-box v-bind:msg1="msg1" v-bind:msg2="msg2"></b-box>
+    </div>
+
+    <template id="box">
+        <div>
+            <p>--------------------</p>
+            <h1>{{msg1}}</h1>
+            <ol>
+                <li v-for="p in msg2">{{p}}</li>
+            </ol>
+            <p>--------------------</p>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+        const Box = {
+            //props用于接收数据
+            props: {
+                msg1: String,
+                msg2:Array
+            },
+            template:'#box'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg1:'基础模板',
+                    msg2:['萧炎','小医仙','萧熏儿']
+                }
+            },
+            components:{
+                'b-box':Box
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

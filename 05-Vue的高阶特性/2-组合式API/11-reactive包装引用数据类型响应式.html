@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reactive</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*
+        * 让引用的数据类型具有响应式
+        * 用法 const {reactive} = Vue;
+        * 然后写的时候，和ref一样，用reactive()包裹
+        * */
+        const app = Vue.createApp({
+            setup(){
+                const {reactive} = Vue;
+                /*
+                * 原理
+                * proxy:{name:'萧炎',sex:'male'} --> proxy({name:'萧炎',sex:'male'})
+                * */
+                let pObj = reactive({name:'萧炎',sex:'male'});
+                let pArr = reactive(['萧炎','萧熏儿','小医仙']);
+                /*
+                    修改时，取出对象中的值进行修改就可以
+                */
+                setTimeout(()=>{
+                    pObj.name="3秒后";
+                    pArr[0] = "3秒后"
+                },3000);
+
+                return{
+                    pObj,
+                    pArr
+                }
+            },
+            template:`
+                <div>
+                    <h1>{{pObj}}</h1>
+                    <h1>{{pArr}}</h1>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>具名插槽</title>
+</head>
+<body>
+    <div id="app">
+        <!--
+        <p>如果想让这三个标签插入对应的插槽，这是错误的用法</p>
+        <b-box>
+            <h1>Header</h1>
+            <h2>Content</h2>
+            <h3>Footer</h3>
+        </b-box>
+        -->
+        <p>------------------</p>
+        <p>具名插槽的用法</p>
+        <b-box>
+            <template v-slot:header>
+                <button v-on:click="">我是头部</button>
+            </template>
+            <!--
+            <template v-slot:content>
+                <button>我是主要内容</button>
+            </template>
+            -->
+            <template v-slot:footer>
+                <button>我是尾部</button>
+            </template>
+            <!--匿名插槽,在填了name="default"的地方自动填充-->
+            <slot>
+                <input name="default" type="date">
+            </slot>
+        </b-box>
+    </div>
+
+    <template id="box">
+        <div>
+            <p>-----------------------</p>
+            <header>
+                <!--头部内容-->
+                <slot name="header">头部内容</slot>
+            </header>
+            <main>
+                <!--主要内容-->
+                <!--这里用了匿名插槽，只要name="default"就可以-->
+                <slot name="default">主要内容</slot>
+            </main>
+            <footer>
+                <!--页脚内容-->
+                <slot name="footer">页脚内容</slot>
+            </footer>
+            <p>-----------------------</p>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+        const Box = {
+            data(){
+                return{
+
+                }
+            },
+            methods: {
+
+            },
+            template:'#box'
+        }
+        const app = Vue.createApp({
+            data(){
+                return{
+
+                }
+            },
+            methods:{
+
+            },
+            components:{
+                'b-box':Box
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

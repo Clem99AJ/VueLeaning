@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件通讯-父传子</title>
+</head>
+<body>
+<div id="app">
+    <!--
+	这里调用自己写的组件
+	传入两个数据msg1和msg2
+	接收的变量名为：
+			如果在命名时是驼峰命名法
+			则需要把驼峰字母改小写，并且在驼峰字母前加  -  隔开
+	-->
+    <b-box v-bind:my-msg1="msg1" v-bind:my-msg2="msg2"></b-box>
+</div>
+
+<!--
+	这里放这组件的内容
+	即把组件标签化
+	但是记得给标签加上id
+	例如：这里的id="box"
+-->
+<template id="box">
+    <div>
+        <p>--------------------</p>
+        <h1>{{myMsg1}}</h1>
+        <ol>
+            <li v-for="p in myMsg2">{{p}}</li>
+        </ol>
+    </div>
+</template>
+
+<script src="js/vue.js"></script>
+<script>
+    /*
+		在实例外定义一个局部组件Box
+		组件可以像app实例那样
+		加入
+		data(){},//放变量
+		methods:{},//放方法
+		props:{},
+		//放该组件接收的数据类型，是否一定需要传入数据，若没传数据默认值
+		//例：myMsg1:{type:String,required:true,default:'你没传东西给我'}
+	    template:'#box'//这里若用了组件标签化，则填'#id的值'
+	*/
+    const Box = {
+        //props用于接收数据
+        props:{
+            myMsg1:{type:String,required:true,default:'你没传东西给我'},
+            myMsg2:{type:Array,required:true}
+        },
+        template:'#box'
+    }
+
+    const app = Vue.createApp({
+        data(){
+            return{
+                msg1:'基础模板',
+                msg2:['萧炎','小医仙','萧熏儿']
+            }
+        },
+        /*
+        * 在这里使用键值对的方法，导入标签
+        * 例：'b-box':Box
+        * 键：使用时<b-box></b-box>
+        * 值：组件名Box
+        * */
+        components:{
+            'b-box':Box
+        },
+
+    }).mount("#app");
+</script>
+</body>
+</html>

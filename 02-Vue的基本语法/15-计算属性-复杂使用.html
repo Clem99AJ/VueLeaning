@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性-复杂使用</title>
+</head>
+<body>
+    <div id="app">
+        <p>1、不合适的用法</p>
+        <p>会员总积分:{{members[0].score + members[1].score + members[2].score + members[3].score}}</p>
+        <p>2、合适的用法:函数 或 计算属性</p>
+        <p>会员总积分:{{totalScore}}</p>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    members:[
+                        {id:'Lk001',name:"萧炎",score:13232},
+                        {id:'Lk001',name:"小医仙",score:14232},
+                        {id:'Lk001',name:"萧熏儿",score:15232},
+                        {id:'Lk001',name:"紫妍",score:16232}
+                    ]
+                }
+            },
+            computed:{
+                totalScore(){
+                    let total = 0;
+                    for(let member of this.members)
+                        total+=member.score;
+                    return total;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

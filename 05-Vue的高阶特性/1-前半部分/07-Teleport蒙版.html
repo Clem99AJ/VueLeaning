@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teleport</title>
+    <style>
+        .box{
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+        }
+        .mask{
+            position: absolute;
+            left:0;
+            top:0;
+            right: 0;
+            bottom: 0;
+
+            background-color: #000;
+            opacity: 0.5;
+            color: #fff;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        #root{
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color:powderblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="root">
+
+        </div>
+        <div class="box">
+            <button v-on:click="btnClick">蒙版</button>
+            <!--这里使用teleport可以让这个蒙版传去对应的元素里-->
+            <!--
+            <teleport to="body">
+                   <div v-show="isShow" class="mask">{{msg}}</div>
+            </teleport>
+            -->
+            <teleport to="#root">
+                <div v-show="isShow" class="mask">{{msg}}</div>
+            </teleport>
+        </div>
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    isShow:false
+                }
+            },
+            methods:{
+                btnClick(){
+                    this.isShow = !this.isShow;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

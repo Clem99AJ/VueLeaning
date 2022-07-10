@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过渡和动画结合</title>
+    <style>
+        body,html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: powderblue;
+        }
+        @keyframes shake-enter{
+            0%{
+                opacity: 1;
+                transform: translateX(0);
+            }
+            25%{
+                opacity: 0.1;
+                transform: translateX(-50px);
+            }
+            50%{
+                opacity: 1;
+                transform: translateX(0);
+            }
+            75%{
+                opacity: 0.1;
+                transform: translateX(50px);
+            }
+            100%{
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes shake-leave {
+            0%{
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+            25%{
+                opacity: 1;
+                transform: translateX(-50px);
+            }
+            50%{
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+            75%{
+                opacity: 1;
+                transform: translateX(50px);
+            }
+            100%{
+                opacity:0.1;
+                transform: translateX(0);
+            }
+        }
+        .box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .box1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .box2{
+            /*相对顶部500px固定*/
+            position: fixed;
+            top:500px;
+            /*点按钮出现手势*/
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        .box2:hover{
+            background-color: pink;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        /*全部默认的动画*/
+        .v-enter-active{
+            /*过渡*/
+            transition:all 2s ease-in-out;
+            /*动画*/
+            animation:10s shake-enter;
+        }
+        .v-leave-active{
+            /*过渡*/
+            transition: all 10s ease-in-out;
+            /*动画*/
+            animation:2s shake-leave;
+        }
+        /*命名的动画*/
+        .nx-enter-from{opacity: 0}
+        .nx-enter-active{transition: all 2s ease-in-out}
+        .nx-enter-to{opacity:1}
+        .nx-leave-from{opacity: 1}
+        .nx-leave-active{transition: all 2s ease-in-out}
+        .nx-leave-to{opacity: 0}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <!--
+                都是针对transition标签
+                type="animation"---以动画为主
+                type="transition"---以过渡时间为主
+                :duration="1000"---限定所有效果的时长
+                :duration="{enter:3000,leave:1000}"---限定进入和离开的时长
+            -->
+            <transition :duration="{enter:1000,leave:1000}">
+                <div class="box" v-show="flag">
+                    <h3>{{msg1}}</h3>
+                </div>
+            </transition>
+            <transition name="nx" style="width: 200px;position: fixed;top: 236px">
+                <div class="box" v-show="flag">
+                    <h3>{{msg2}}</h3>
+                </div>
+            </transition>
+
+            <div class="box1">
+                <button v-on:click="flag = !flag" class="box2">change</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg1:'命名前',
+                    msg2:'命名后',
+                    flag:false
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

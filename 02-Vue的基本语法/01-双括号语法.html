@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>双括号语法</title>
+</head>
+<body>
+    <div id="app">
+        <p>----双括号语法只能作用与标签内部----</p>
+        <h2>{{msg}}</h2>
+
+        <p>----双括号语法内可以是变量也可以是表达式----</p>
+        <h2>{{msg + '   ' + site}}</h2>
+
+        <p>----在括号外还可以加入其他东西----</p>
+        <h2>{{msg}}      {{site}}</h2>
+        <h2>{{msg}}, something</h2>
+
+        <p>----用于计算----</p>
+        <h2>计算:  {{count * 999 / 10}}</h2>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    msg:'基础模板',
+                    site:'something',
+                    count:2
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

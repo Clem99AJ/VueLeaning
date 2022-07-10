@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侦听器</title>
+</head>
+<body>
+    <div id="app">
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            setup(props,context){
+                const {ref,watch} = Vue
+                let brand = ref('')
+                let site = ref('')
+                /*
+                *侦听器--侦听一个属性
+                *watch(值的来源,做的操作,当监听对象是引入数据类型时，可以自己配置监听谁)
+                *
+                * */
+                /*watch(brand,(currentValue,preValue)=>{
+                    /!*这里放监听的数据发生变化后，进行操作的结构体，可以写一些异步功能*!/
+                    console.log(currentValue);
+                    console.log(preValue);
+                },{})*/
+                /*侦听多个属性--用数组*/
+                watch([brand,site],([currentBrand,preBrand],[currentSite,preSite])=>{
+                    /*相应业务*/
+                    console.log('现在的',currentBrand,currentSite)
+                    console.log('过去的',preBrand,preSite)
+                },{})
+                return{
+                    brand,
+                    site
+                }
+            },
+            template:`
+                <div>
+                    品牌<input type="text" placeholder="Please enter something" v-model="brand">
+                    <p>输入的品牌是:{{brand}}</p>
+                    网址<input type="text" placeholder="Please enter something" v-model="site">
+                    <p>输入的网址是:{{site}}</p>
+                </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>

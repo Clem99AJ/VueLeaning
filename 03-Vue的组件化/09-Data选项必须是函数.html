@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data选项必须是函数</title>
+</head>
+<body>
+    <script>
+        let obj1 = {};
+        let obj2 = {};
+        console.log(obj1===obj2);
+
+        let obj = {
+            name:'啦啦啦'
+        };
+        /*这里类似是三个指针，指向了同一个地址*/
+        let p1 = obj;
+        let p2 = obj;
+        let p3 = obj;
+        console.log(p1 === p2)
+    </script>
+</body>
+</html>

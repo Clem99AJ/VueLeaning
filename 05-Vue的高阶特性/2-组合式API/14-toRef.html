@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>toRef</title>
+</head>
+<body>
+    <div id="app">
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /*
+            toRef用来包装可传可不传的值
+            引入的数据类型，如果没有传入该数据，它也会创建一个变量
+        */
+        const app = Vue.createApp({
+            setup(props,context){
+                const {reactive,toRefs,toRef} = Vue;
+                /*
+                    首先，用reactive来接收引入的数据类型
+                */
+                let pObj = reactive({name:'萧炎',sex:'male'});
+                /*这里用toRefs来结构必须传入的数据*/
+                let {name,sex} = toRefs(pObj);
+                /*这里用toRef来结构可传可不传的数据*/
+                let age = toRef(pObj,'age');
+
+                /*这里随便写个延时函数来对属性进行修改*/
+                setTimeout(()=>{
+                    name.value = '修改后';
+                    sex.value =  'female';
+                    age.value = 100;
+                },3000)
+
+                return{
+                    name,
+                    sex,
+                    age
+                }
+            },
+            template:`
+                <div>
+                    <h1>姓名：{{name}} 性别：{{sex}} 年龄：{{age}}</h1>
+                </div>
+
+            `
+        }).mount("#app");
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>setup</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            /*
+                setup初使用
+                setup的使用非常像data(){}
+                但是它可以写函数，写属性
+                如果用这个，相当于取代了之前的两个钩子函数
+                beforeCreate  --→ setup()
+                created       --→ 即vue3.x没有了前面两个钩子函数
+                并且在setup中没有了this，因为在setup调用是在创建时，挂在前
+                即在setup中不可以调用选项中的东西
+                但是选项中可以调用setup中的东西
+            */
+            setup(props,context){
+                return{
+                    msg:'基础模板',
+                    btnClick:()=>{
+                        alert('点我干吗')
+                    }
+                }
+            },
+            methods:{
+                deal(){
+                    console.log(this.$options.setup)
+                }
+            },
+            template:`
+              <div>
+                  <div>{{msg}}</div>
+                  <button v-on:click="btnClick">Click me</button>
+                  <button v-on:click="deal">Click me see setup from option</button>
+              </div>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>
